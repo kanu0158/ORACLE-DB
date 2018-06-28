@@ -391,15 +391,86 @@ FROM SCHEDULE SC
 WHERE SC.SCHE_DATE LIKE '20120914'
 ;
 
+-- 023
+-- Group by 사용
+-- 팀별 선수의 수
+-- 아이파크 20명
+-- 드래곤즈 19명
+SELECT 
+    T.TEAM_NAME 팀명,
+    COUNT(P.PLAYER_ID) 선수인원
+FROM
+    TEAM T
+    JOIN PLAYER P
+        ON T.TEAM_ID LIKE P.TEAM_ID
+GROUP BY
+    T.TEAM_ID,
+    T.TEAM_NAME
+ORDER BY
+    T.TEAM_ID
+;
+SELECT 
+    (SELECT
+        TEAM_NAME
+     FROM TEAM
+     WHERE TEAM_ID LIKE T.TEAM_ID) 팀명,
+    COUNT(P.PLAYER_ID) 선수인원
+FROM
+    TEAM T
+    JOIN PLAYER P
+        ON T.TEAM_ID LIKE P.TEAM_ID
+GROUP BY
+    T.TEAM_ID
+ORDER BY
+    T.TEAM_ID
+;
+
+-- 024
+-- Group by 사용
+-- 팀별 골키퍼의 평균 키
+-- 아이파크 180CM
+-- 드래곤즈 178CM
+SELECT
+    T.TEAM_NAME 팀명,
+    --P.POSITION 포지션,
+    AVG(P.HEIGHT) 키
+FROM 
+    PLAYER P
+    JOIN TEAM T
+        ON P.TEAM_ID LIKE T.TEAM_ID
+WHERE
+    P.POSITION LIKE 'GK'
+GROUP BY 
+    T.TEAM_NAME
+    --P.POSITION
+ORDER BY
+    T.TEAM_NAME
+;
 
 desc team;
 desc schedule;
-desc schedule;
+desc PLAYER;
 select * from schedule WHERE schedule.SCHE_DATE LIKE '201210%';
 select * from team;
 select * from stadium;
+select * from PLAYER;
 
-
+-- NVL2는 오라클꺼 ... 대신 이걸 사용해라
+SELECT
+    PLAYER_NAME 이름,
+    CASE
+        WHEN POSITION IS NULL THEN '없음' -- 한글을 달 수 있다.
+        WHEN POSITION LIKE 'GK' THEN '골키퍼'
+        WHEN POSITION LIKE 'DF' THEN '수비수'
+        WHEN POSITION LIKE 'MF' THEN '미드필더'
+        WHEN POSITION LIKE 'FW' THEN '공격수'
+        ELSE POSITION -- DEFAULT
+    END 포지션 -- 아이아스
+FROM
+    PLAYER
+WHERE
+    TEAM_ID = 'K08'
+;
 
 
 ---------------------------------------------------------------------------------------------------
@@ -708,3 +779,5 @@ WHERE
 -- 022
 -- 2012년 9월 14일에 벌어질 경기는 어디와 어디입니까
 -- 홈팀: ?   원정팀: ? 로 출력
+
+

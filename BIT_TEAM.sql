@@ -1,0 +1,255 @@
+--GROUP BY
+-- 팀장 4명 팀원테이블 20명(팀장포함)
+-- 각 팀원은 팀장ID를 속성으로 가짐
+
+--UPDATE TEAMW SET MEM_NAME = '태형' WHERE MEM_NAME LIKE '태영';
+--DROP TABLE TEAMZ;
+CREATE TABLE TEAMZ(
+    TEAM_ID VARCHAR2(20) PRIMARY KEY,
+    TEAM_NAME VARCHAR2(20)
+);
+CREATE TABLE TEAMW(
+    MEM_ID VARCHAR2(20) PRIMARY KEY,
+    TEAM_ID VARCHAR2(20),
+    MEM_NAME VARCHAR2(20),
+    MEM_AGE DECIMAL,
+    ROLL VARCHAR2(20) --팀장, 팀원
+);
+ALTER TABLE TEAMW ADD CONSTRAINT teamw_fk_team_id FOREIGN KEY (TEAM_ID) REFERENCES TEAMZ(TEAM_ID);
+
+INSERT INTO TEAMZ(
+    TEAM_ID, TEAM_NAME
+)
+VALUES(
+    'ATEAM','저스티스'
+);
+INSERT INTO TEAMZ(
+    TEAM_ID, TEAM_NAME
+)
+VALUES(
+    'HTEAM','엘카로'
+);
+INSERT INTO TEAMZ(
+    TEAM_ID, TEAM_NAME
+)
+VALUES(
+    'CTEAM','가오갤'
+);
+INSERT INTO TEAMZ(
+    TEAM_ID, TEAM_NAME
+)
+VALUES(
+    'STEAM','어벤저스'
+);
+
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '저스티스1', 'ATEAM', '형준', 34, '팀장'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '저스티스2', 'ATEAM', '세인', 35, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '저스티스3', 'ATEAM', '희태', 21, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '저스티스4', 'ATEAM', '상훈', 29, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '저스티스5', 'ATEAM', '태형', 25, '팀원'
+);
+
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '엘카로1', 'HTEAM', '혜리', 26, '팀장'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '엘카로2', 'HTEAM', '지은', 26, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '엘카로3', 'HTEAM', '준', 27, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '엘카로4', 'HTEAM', '재경', 30, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '엘카로5', 'HTEAM', '단아', 26, '팀원'
+);
+
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '가오갤1', 'CTEAM', '최정훈', 32, '팀장'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '가오갤2', 'CTEAM', '윤호', 31, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '가오갤3', 'CTEAM', '가은', 29, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '가오갤4', 'CTEAM', '정훈', 23, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '가오갤5', 'CTEAM', '승태', 30, '팀원'
+);
+
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '어벤저스1', 'STEAM', '승호', 27, '팀장'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '어벤저스2', 'STEAM', '소진', 26, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '어벤저스3', 'STEAM', '이슬', 29, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '어벤저스4', 'STEAM', '진태', 26, '팀원'
+);
+INSERT INTO TEAMW(
+    MEM_ID, TEAM_ID, MEM_NAME, MEM_AGE, ROLL
+)
+VALUES(
+    '어벤저스5', 'STEAM', '누리', 30, '팀원'
+);
+
+SELECT * FROM TEAMZ;
+SELECT * FROM TEAMW;
+DESC TEAMZ;
+DESC TEAMW;
+
+--COUNT() 팀원수
+--SUM() 팀원 나이합
+--MAX() 팀원 나이 최대치
+--MIN() 팀원 나이최소치
+--AVG() 팀원 나이평균
+SELECT
+    (SELECT MEM_NAME
+     FROM TEAMW
+     WHERE TEAM_ID LIKE TW.TEAM_ID
+        AND ROLL LIKE '팀장') 팀장,
+    (SELECT TEAM_NAME
+     FROM TEAMZ
+     WHERE TEAM_ID LIKE TW.TEAM_ID) 팀명,     
+     COUNT(*) 인원수,
+     SUM(TW.MEM_AGE) 나이합계,
+     MAX(TW.MEM_AGE) 최대나이,
+     MIN(TW.MEM_AGE) 최소나이,
+     AVG(TW.MEM_AGE) 평균나이
+FROM TEAMW TW
+GROUP BY
+    TW.TEAM_ID
+ORDER BY
+    TW.TEAM_ID
+;
+
+-- 그룹결과를 가지고 처리하는 예제
+SELECT 
+     (SELECT TEAM_NAME
+      FROM TEAMZ
+      WHERE TEAM_ID LIKE TW.TEAM_ID) 팀명,     
+     COUNT(*) 인원수,
+     SUM(TW.MEM_AGE) 나이합계,
+     MAX(TW.MEM_AGE) 최대나이,
+     MIN(TW.MEM_AGE) 최소나이,
+     AVG(TW.MEM_AGE) 평균나이
+FROM TEAMW TW
+--    JOIN TEAMZ TZ
+--        ON TW.TEAM_ID LIKE TZ.TEAM_ID
+GROUP BY
+    --TZ.TEAM_ID
+    TW.TEAM_ID
+HAVING  -- 그룹바이가 없으면 존재하지않는다.
+    AVG(TW.MEM_AGE) >= 28
+ORDER BY
+    TW.TEAM_ID
+;
+-- CASE문 사용
+SELECT
+    Z.TEAM_ID 팀ID,
+    Z.TEAM_NAME 팀명,
+    W.MEM_ID ID,
+    W.MEM_NAME 이름,
+    W.MEM_AGE 나이,
+    W.ROLL 역할
+FROM TEAMW W
+    JOIN TEAMZ Z
+        ON W.TEAM_ID LIKE Z.TEAM_ID
+;
+
+-- UPDATE문 케이스 사용
+UPDATE TEAMW
+SET ROLL = CASE
+                WHEN TEAMW.MEM_NAME IN('형준','혜리','최정훈','승호') THEN '팀장'
+                ELSE '팀원' 
+           END
+WHERE ROLL IS NOT NULL
+;
+
+
+SELECT
+    CASE
+        WHEN TEAMW.MEM_NAME LIKE '승호' THEN '와칸타'
+        WHEN TEAMW.MEM_NAME IS NOT NULL THEN '블랙핑크'
+        ELSE TEAMW.MEM_NAME
+    END 포레버
+FROM
+    TEAMW
+;
+
+
+ALTER TABLE TEAMW DROP COLUMN ROLL;
+ALTER TABLE TEAMW ADD(ROLL VARCHAR2(20));
